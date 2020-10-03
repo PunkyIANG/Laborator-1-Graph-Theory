@@ -34,7 +34,7 @@ namespace Core
             
             for (var j = 0; j < width; j++)
             {
-                Edges.Add(new Edge());          //you get it
+                Edges.Add(new Edge(j));          //you get it
             }
 
             for (var i = 0; i < height; i++)
@@ -55,23 +55,7 @@ namespace Core
                 edge.ConnectedVertices[1].AdjacentVertices.Add(edge.ConnectedVertices[0]);    //probably rewrite this as well
             }
             
-            Console.WriteLine("There are " + Vertices.Count + " vertices and " + Edges.Count + " edges");
-
-            Console.Write("Adjacency: ");
-            foreach (var vertex in Vertices)
-            {
-                Console.Write(vertex.GetVertexDegree() + " ");
-            }
-
-            Console.WriteLine();
-
-            Console.Write("Edges: ");
-            foreach (var edge in Edges)
-            {
-                Console.Write("(" + edge.ConnectedVertices[0].id + ", " + edge.ConnectedVertices[1].id + ") ");
-            }
-
-            Console.WriteLine();
+            PrintGraphStats();
         }
 
         public void PrintIncidenceMatrix()
@@ -122,7 +106,7 @@ namespace Core
                 {
                     if (matrix[i][j] != matrix[j][i])
                     {
-                        Console.WriteLine("Error: numbers at pos (" + i + ", " + j + ") should be the same");
+                        Console.WriteLine("Error: numbers at pos (" + i + ", " + j + ") and (" + j + ", " + i + ") should be the same");
                         return;
                     }
                     else if (matrix[i][j] == -1 && j > i) //make sure this ain't gonna repeat twice
@@ -146,24 +130,13 @@ namespace Core
                     Console.WriteLine("Warning: wrong degree value detected at vertex " + i);
                 }
             }
-
-            Console.WriteLine("There are " + Vertices.Count + " vertices and " + Edges.Count + " edges");
-
-            Console.Write("Adjacency: ");
-            foreach (var vertex in Vertices)
+            
+            for (int i = 0; i < Edges.Count; i++)
             {
-                Console.Write(vertex.GetVertexDegree() + " ");
+                Edges[i].id = i;
             }
 
-            Console.WriteLine();
-
-            Console.Write("Edges: ");
-            foreach (var edge in Edges)
-            {
-                Console.Write("(" + edge.ConnectedVertices[0].id + ", " + edge.ConnectedVertices[1].id + ") ");
-            }
-
-            Console.WriteLine();
+            PrintGraphStats();
         }
 
         public void PrintKirchhoffMatrix()
@@ -237,7 +210,7 @@ namespace Core
                     {
                         if (matrix[i][j] != matrix[j][i])
                         {
-                            Console.WriteLine("Error: numbers at pos (" + i + ", " + j + ") should be the same");
+                            Console.WriteLine("Error: numbers at pos (" + i + ", " + j + ") and (" + j + ", " + i + ") should be the same");
                             return;
                         }
                         else if (matrix[i][j] == 1 && j > i) //make sure this ain't gonna repeat twice
@@ -258,23 +231,12 @@ namespace Core
                 }
             }
 
-            Console.WriteLine("There are " + Vertices.Count + " vertices and " + Edges.Count + " edges");
-
-            Console.Write("Adjacency: ");
-            foreach (var vertex in Vertices)
+            for (int i = 0; i < Edges.Count; i++)
             {
-                Console.Write(vertex.GetVertexDegree() + " ");
+                Edges[i].id = i;
             }
-
-            Console.WriteLine();
-
-            Console.Write("Edges: ");
-            foreach (var edge in Edges)
-            {
-                Console.Write("(" + edge.ConnectedVertices[0].id + ", " + edge.ConnectedVertices[1].id + ") ");
-            }
-
-            Console.WriteLine();
+            
+            PrintGraphStats();
         }
 
         public void PrintAdjacencyMatrix()
@@ -305,14 +267,85 @@ namespace Core
                 Console.WriteLine();
             }
         }
+        
+        public List<List<int>> GetAdjacencyMatrix(int diagonalNumber)
+        {
+            var result = new List<List<int>>();
+            
+            var height = Vertices.Count;
+
+            for (var i = 0; i < height; i++)
+            {
+                result.Add(new List<int>());
+                for (var j = 0; j < height; j++)
+                {
+                    if (i == j)
+                    {
+                        // Console.Write("0  ");
+                        result[i].Add(diagonalNumber);
+                    }
+                    else
+                    {
+                        if (Vertices[i].AdjacentVertices.Contains(Vertices[j]))
+                        {
+                            //Console.Write("1  ");
+                            result[i].Add(1);
+                        }
+                        else
+                        {
+                            //Console.Write("0  ");
+                            result[i].Add(0);
+                        }
+                    }
+                }
+
+                Console.WriteLine();
+            }
+            
+            return result;
+        }
 
 
-        public List<List<int>> ParseMatrixFile()
+        public void PrintGraphStats()
+        {
+            Console.WriteLine("There are " + Vertices.Count + " vertices and " + Edges.Count + " edges");
+            
+            Console.Write("Vertex IDs: ");
+            foreach (var vertex in Vertices)
+            {
+                Console.Write(vertex.id + " ");
+            }
+            Console.WriteLine();
+
+
+            Console.Write("Adjacency: ");
+            foreach (var vertex in Vertices)
+            {
+                Console.Write(vertex.GetVertexDegree() + " ");
+            }
+            Console.WriteLine();
+
+            Console.Write("Edges: ");
+            foreach (var edge in Edges)
+            {
+                Console.Write("(" + edge.ConnectedVertices[0].id + ", " + edge.ConnectedVertices[1].id + ") ");
+            }
+            Console.WriteLine();
+
+            
+            Console.Write("Edge IDs: ");
+            foreach (var edge in Edges)
+            {
+                Console.Write(edge.id + " ");
+            }
+            Console.WriteLine();
+        }
+
+
+        public List<List<int>> ParseMatrixFile(string path)
         {
             string line;
             List<List<int>> matrix = new List<List<int>>();
-            var path =
-                @"C:\Users\Professional\iCloudDrive\Grafuri\lab1\laborator1\Laborator_1\Core\incidenceMatrix.txt";
 
             // Read the file and display it line by line.  
             var file = new StreamReader(path);

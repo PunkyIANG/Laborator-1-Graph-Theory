@@ -7,10 +7,13 @@ namespace Core
         public int id;
         public List<Vertex> ConnectedVertices = new List<Vertex>();
 
-        public Edge()
+        public Edge(int id)
         {
-            
+            this.id = id;
         }
+        
+        
+        
 
         public Edge(Vertex firstVertex, Vertex secondVertex)
         {
