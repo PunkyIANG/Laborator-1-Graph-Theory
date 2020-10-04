@@ -13,10 +13,10 @@ namespace Exercitiul_1_c
         private static void Main(string[] args)
         {
             var graph = new Graph();
-            graph.SetAdjacencyMatrix(graph.ParseMatrixFile(@"..\..\..\..\Core\adjacencyMatrix.txt"));
+            graph.SetIncidenceMatrix(graph.ParseMatrixFile(@"..\..\..\..\Core\g19incidence.txt"));
 
-            InitDepthFirstSearch(graph.Vertices.First(), graph);
-            // InitBreadthFirstSearch(graph.Vertices.First(), graph);
+            // InitDepthFirstSearch(graph.Vertices.First(), graph);
+            InitBreadthFirstSearch(graph.Vertices.First(), graph);
         }
 
         private static void InitBreadthFirstSearch(Vertex startingVertex, Graph graph)

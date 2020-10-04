@@ -35,11 +35,11 @@ namespace Exercitiul_1_a
 
         private static void BronKerbosch(List<Vertex> qPlus, List<Vertex> qMinus, List<Vertex> s)
         {
-            Console.WriteLine("started cycle " + CheckQPlusQMinusAdj(qPlus, qMinus));
             while ((qPlus.Count != 0) && CheckQPlusQMinusAdj(qPlus, qMinus))
             {
+                PrintBronKerboschStatus(qPlus, qMinus, s);
                 var v = qPlus.First();
-                Console.WriteLine(v.id);
+                
                 s.Add(v);
                 var qPlusNew = GetAllNonNeighbors(qPlus, v, true);
                 var qMinusNew = GetAllNonNeighbors(qMinus, v, false);
@@ -61,7 +61,32 @@ namespace Exercitiul_1_a
                 qPlus.Remove(v);
                 qMinus.Add(v);
             }
-            Console.WriteLine("stopped cycle");
+            
+        }
+
+        private static void PrintBronKerboschStatus(List<Vertex> qPlus, List<Vertex> qMinus, List<Vertex> s)
+        {
+            Console.Write("S : ");
+            foreach (var vertex in s)
+            {
+                Console.Write((vertex.id) + " ");
+            }
+            Console.WriteLine();
+            
+            Console.Write("Q+: ");
+            foreach (var vertex in qPlus)
+            {
+                Console.Write((vertex.id) + " ");
+            }
+            Console.WriteLine();
+            
+            Console.Write("Q-: ");
+            foreach (var vertex in qMinus)
+            {
+                Console.Write((vertex.id) + " ");
+            }
+            Console.WriteLine();
+            Console.WriteLine();
         }
 
         private static bool CheckQPlusQMinusAdj(List<Vertex> qPlus, List<Vertex> qMinus)
