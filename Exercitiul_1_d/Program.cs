@@ -10,8 +10,7 @@ namespace Exercitiul_1_d
         {
             var graph = new Graph();
             
-            // graph.SetAdjacencyMatrix(graph.ParseMatrixFile(@"C:\Users\Professional\iCloudDrive\Grafuri\lab1\Laborator_1\Core\adjacencyMatrix.txt"));
-            graph.SetIncidenceMatrix(graph.ParseMatrixFile(@"C:\Users\Professional\iCloudDrive\Grafuri\lab1\Laborator_1\Core\incidenceMatrix.txt"));
+            graph.SetIncidenceMatrix(graph.ParseMatrixFile(@"..\..\..\..\Core\g19incidence.txt"));
             graph.PrintAdjacencyMatrix();
         }
     }

@@ -8,17 +8,23 @@ namespace Exercitiul_1_a
     internal class Program
     {
         private static List<List<Vertex>> IndependentSets = new List<List<Vertex>>();
+        private static int alpha0 = 0;
         
         private static void Main(string[] args)
         {
             var graph = new Graph();
-            graph.SetAdjacencyMatrix(graph.ParseMatrixFile(@"..\..\..\..\Core\adjacencyMatrix.txt"));    //yes, this looks like shit
-                                                                                                                //no, I can't be bothered to fix this
+            graph.SetIncidenceMatrix(graph.ParseMatrixFile(@"..\..\..\..\Core\g19incidence.txt"));
+            
             BronKerbosch(graph.Vertices, new List<Vertex>(), new List<Vertex>());
             
             Console.WriteLine("Results: ");
             foreach (var independentSet in IndependentSets)
             {
+                if (independentSet.Count != alpha0)    //comment this statement to print maximal independent sets
+                {
+                    continue;
+                }
+                
                 foreach (var vertex in independentSet)
                 {
                     Console.Write(vertex.id + " ");
@@ -41,6 +47,10 @@ namespace Exercitiul_1_a
                 if (qPlusNew.Count == 0 && qMinusNew.Count == 0)
                 {
                     IndependentSets.Add(new List<Vertex>(s));
+                    if (s.Count > alpha0 || alpha0 == 0)
+                    {
+                        alpha0 = s.Count;
+                    }
                 }
                 else
                 {

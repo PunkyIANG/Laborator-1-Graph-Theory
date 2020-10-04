@@ -16,8 +16,8 @@ namespace Exercitiul_1_b
         static void Main(string[] args)
         {
             var graph = new Graph();
-            graph.SetAdjacencyMatrix(graph.ParseMatrixFile(@"..\..\..\..\Core\adjacencyMatrix.txt"));    //yes, this looks like shit
-                                                                                                                //no, I can't be bothered to fix this
+            graph.SetIncidenceMatrix(graph.ParseMatrixFile(@"..\..\..\..\Core\g19incidence.txt"));
+            
             GetDominantSet(graph.GetAdjacencyMatrix(1));
 
             Console.WriteLine("Dominant sets: ");
