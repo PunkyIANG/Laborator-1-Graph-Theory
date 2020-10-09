@@ -109,10 +109,10 @@ namespace Core
                         Console.WriteLine("Error: numbers at pos (" + i + ", " + j + ") and (" + j + ", " + i + ") should be the same");
                         return;
                     }
-                    else if (matrix[i][j] == -1 && j > i) //make sure this ain't gonna repeat twice
+                    else if (matrix[i][j] == -1 && j > i) 
                     {
                         var newEdge = new Edge(Vertices[i], Vertices[j]);
-                        if (!Edges.Contains(newEdge)) //basically irrelevant, for some reason list.Contains() doesn't work here
+                        if (!Edges.Contains(newEdge)) 
                         {
                             Edges.Add(newEdge);
 

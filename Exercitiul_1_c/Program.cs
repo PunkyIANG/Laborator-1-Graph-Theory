@@ -27,38 +27,31 @@ namespace Exercitiul_1_c
             discoveredVertices.Add(startingVertex);
             Console.WriteLine();
             PrintBFSState();
-            BreadthFirstSearch(startingVertex);
-        }
 
-        private static void BreadthFirstSearch(Vertex startingVertex)
-        {
-            discoveredVertices.AddRange(GetUndiscoveredNeighbours(startingVertex));
-            researchedVertices.Add(startingVertex);
-            discoveredVertices.Remove(startingVertex);
-            PrintBFSState();
-            
-
-            var discoveredNeighbours = GetDiscoveredNeighbours(startingVertex);
-            while (discoveredNeighbours.Count != 0)
+            while (discoveredVertices.Count != 0)
             {
-                BreadthFirstSearch(discoveredNeighbours.First());
-                discoveredNeighbours = GetDiscoveredNeighbours(startingVertex);
+                startingVertex = discoveredVertices.First();
+
+                discoveredVertices.AddRange(GetUndiscoveredNeighbours(startingVertex));
+                researchedVertices.Add(startingVertex);
+                discoveredVertices.Remove(startingVertex);
+                PrintBFSState();
             }
         }
-
+        
         private static void PrintBFSState()
         {
             Console.Write("Atins:    ");
             foreach (var vertex in discoveredVertices)
             {
-                Console.Write(vertex.id + " ");
+                Console.Write((vertex.id + 1) + " ");
             }
             Console.WriteLine();
             
             Console.Write("Cercetat: ");
             foreach (var vertex in researchedVertices)
             {
-                Console.Write(vertex.id + " ");
+                Console.Write((vertex.id + 1) + " ");
             }
             Console.WriteLine();
             Console.WriteLine();
@@ -120,21 +113,6 @@ namespace Exercitiul_1_c
             Console.WriteLine();
         }
         
-        private static List<Vertex> GetDiscoveredNeighbours(Vertex vertex)
-        {
-            var result = new List<Vertex>();
-
-            foreach (var neighbour in vertex.AdjacentVertices)
-            {
-                if (CheckIfContains(discoveredVertices, neighbour))
-                {
-                    result.Add(neighbour);
-                }
-            }
-            
-            return result;
-        }
-
         private static List<Vertex> GetUndiscoveredNeighbours(Vertex vertex)
         {
             var result = new List<Vertex>();
