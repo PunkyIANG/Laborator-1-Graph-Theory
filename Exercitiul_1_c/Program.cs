@@ -9,17 +9,18 @@ namespace Exercitiul_1_c
     {
         private static List<Vertex> discoveredVertices;
         private static List<Vertex> researchedVertices;
+
+        private static Graph graph;
         
         private static void Main(string[] args)
         {
-            var graph = new Graph();
             graph.SetIncidenceMatrix(graph.ParseMatrixFile(@"..\..\..\..\Core\g19incidence.txt"));
 
-            // InitDepthFirstSearch(graph.Vertices.First(), graph);
-            InitBreadthFirstSearch(graph.Vertices.First(), graph);
+            // InitDepthFirstSearch(graph.Vertices.First());
+            InitBreadthFirstSearch(graph.Vertices.First());
         }
 
-        private static void InitBreadthFirstSearch(Vertex startingVertex, Graph graph)
+        private static void InitBreadthFirstSearch(Vertex startingVertex)
         {
             discoveredVertices = new List<Vertex>();
             researchedVertices = new List<Vertex>();
@@ -57,7 +58,7 @@ namespace Exercitiul_1_c
             Console.WriteLine();
         }
 
-        private static void InitDepthFirstSearch(Vertex startingVertex, Graph graph)
+        private static void InitDepthFirstSearch(Vertex startingVertex)
         {
             discoveredVertices = new List<Vertex>();
             researchedVertices = new List<Vertex>();
@@ -69,24 +70,22 @@ namespace Exercitiul_1_c
             }
             Console.WriteLine();
             
-            DepthFirstSearch(startingVertex, graph);
+            DepthFirstSearch(startingVertex);
         }
         
-        private static void DepthFirstSearch(Vertex startingVertex, Graph graph)
+        private static void DepthFirstSearch(Vertex startingVertex)
         {
             discoveredVertices.Add(startingVertex);
             PrintDFSState(graph);
             var undiscoveredNeighbours = GetUndiscoveredNeighbours(startingVertex);
-            // Console.WriteLine("Discovered " + startingVertex.id);
 
             while (undiscoveredNeighbours.Count != 0) 
             {
-                DepthFirstSearch(undiscoveredNeighbours.First(), graph);
+                DepthFirstSearch(undiscoveredNeighbours.First());
                 undiscoveredNeighbours = GetUndiscoveredNeighbours(startingVertex);
             }
 
             researchedVertices.Add(startingVertex);
-            // Console.WriteLine("Researched " + startingVertex.id);
             PrintDFSState(graph);
         }
 
